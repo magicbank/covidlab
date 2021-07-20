@@ -1,0 +1,27 @@
+#!/bin/bash
+
+DATETIME=$(TZ="Asia/Bangkok" date +"%Y-%m-%dT%H:%M:%S+0700")
+
+printf "\n==== JOB START ${DATETIME} ====\n"
+
+git pull
+
+curl --silent --location https://script.google.com/macros/s/AKfycby24gNrTQcQDYf_PDWM0O558C_9zAkdjJ6d2UPbjS-hviTE0qn1mGqak4xnahKDbnLu/exec --output /covid/lab/latest.json
+
+CHANGE=$(git status --short --untracked-files=all | wc -l)
+
+if [[ ${CHANGE} -gt 0 ]]; then
+  printf "HAS CHANGE\n"
+
+  git add --all .
+  git commit --message "AUTOMATED UPDATE DATA @${DATETIME}"
+  git push
+
+  curl --silent --request POST --header "Authorization: Bearer ${TOKEN}" --form "message=[AUTOMATED] DATA SYNC COMPLETED" https://notify-api.line.me/api/notify
+else
+  printf "NO CHANGE\n"
+
+  curl --silent --request POST --header "Authorization: Bearer ${TOKEN}" --form "message=[AUTOMATED] NO DATA CHANGE" https://notify-api.line.me/api/notify
+fi
+
+printf "\n==== JOB END ${DATETIME} ====\n"
