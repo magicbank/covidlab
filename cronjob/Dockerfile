@@ -13,7 +13,7 @@ VOLUME /root/.ssh
 WORKDIR /covid
 ADD crontab /etc/crontab
 ADD job entrypoint.sh .
-RUN chmod 0644 /etc/crontab && chmod 0744 /covid/job
+RUN chmod 0644 /etc/crontab && chmod 0744 /covid/job && chmod 0744 /covid/entrypoint.sh
 
 WORKDIR /covid/lab
 
