@@ -6,7 +6,7 @@ printf "\n==== JOB START ${DATETIME} ====\n"
 
 git pull
 
-curl --silent --location https://script.google.com/macros/s/AKfycbzDQ1S_3R8Xl7Qq7PeY00oLSiK7qzsuaSYcYDrNbl7IAWJ2YnNjbAt7drdPMQt6FgXM/exec --output /covid/lab/latest.json
+curl --silent --location https://script.google.com/macros/s/AKfycbxNAs8EDuYx8OC1SYzcptvMt8kQEhs1LGXmJMavMj5MUJv3AmvmDrHvNC3ysTfleFsR/exec --output /covid/lab/latest.json
 
 CHANGE=$(git status --short --untracked-files=all | wc -l)
 
